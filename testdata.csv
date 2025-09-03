@@ -1,2 +1,4 @@
-username,password,first_name,last_name,mobile_number,mobile_number_alt,email_id
-iamfd,password, Davinder,Raju,7676874637,8978678987,davind@gmail.com
+first_name,last_name,mobile_number,mobile_number_alt,email_id
+ Davinder,Raju,7676874637,8978678987,davind@gmail.com
+Vinay,Partap,7384957483,9847582932,partap@gmail.om
+Ravi,Kumar,9302837462,9283754392,rav@gmail.com
