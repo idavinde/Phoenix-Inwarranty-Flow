@@ -33,7 +33,11 @@ jobs:
             newman run 'Inwarranty-flow Collection With CSV File.postman_collection.json' \
             -e QA.postman_environment.json \
             -d testdata.csv \
-            -r cli,htmlextra 
+            -r cli,htmlextra \
+            --reporter-htmlextra-export newman/report.html \
+            --reporter-htmlextra-omitHeaders \
+            --reporter-htmlextra-disableRequestBody \
+            --reporter-htmlextra-disableResponseBody
             
 
     -  name: NewMan Report
