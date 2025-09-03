@@ -36,7 +36,7 @@ jobs:
             -r cli,htmlextra
 
     -  name: NewMan Report
-       uses: actions/upload-artufact@v4.6.2
+       uses: actions/upload-artifact@v4.6.2
        with:
          name: Newman Report
          path: newman/*.html
