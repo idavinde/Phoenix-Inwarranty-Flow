@@ -27,14 +27,14 @@ jobs:
             -e QA.postman_environment.json \
             -d testdata.csv \
             -r cli,html \
-            --reporter-html-export ./newman/report.html
+            --reporter-html-export ./newman/index.html
 
       - name: Upload Full Newman Report as Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Newman Full Report
-          path: newman/report.html
+          path: newman/*.html
 
       - name: Deploy Report to GitHub Pages
         if: always()
