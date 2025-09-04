@@ -19,15 +19,15 @@ jobs:
 
       - name: Install Node.js and Newman
         run: |
-          npm install -g newman newman-reporter-htmlextra
+          npm install -g newman newman-reporter-html
 
       - name: Run Postman Collection
         run: |
           newman run 'Inwarranty-flow Collection With CSV File.postman_collection.json' \
             -e QA.postman_environment.json \
             -d testdata.csv \
-            -r cli,htmlextra \
-            --reporter-htmlextra-export ./newman/index.html
+            -r cli,html \
+            --reporter-html-export ./newman/index.html
 
       - name: Upload Full Newman Report as Artifact
         if: always()
