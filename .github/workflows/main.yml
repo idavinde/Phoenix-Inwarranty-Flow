@@ -26,7 +26,7 @@ jobs:
           newman run 'Inwarranty-flow Collection With CSV File.postman_collection.json' \
             -e QA.postman_environment.json \
             -d testdata.csv \
-            -r cli,htmlextra \
+            -r cli,html \
             --reporter-htmlextra-export newman/report.html
 
       - name: Upload Full Newman Report as Artifact
