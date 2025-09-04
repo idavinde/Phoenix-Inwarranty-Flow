@@ -5,32 +5,25 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: 00 15 * * *
-    - cron: 00 02 * * *
-    - cron: 00 18 * * 1-5 
+    - cron: "00 15 * * *"
+    - cron: "00 02 * * *"
+    - cron: "00 18 * * 1-5"
 
 jobs:
   run-postman-test:
     runs-on: ubuntu-latest
 
     steps:
-    
-    -  name: checkout the code
-       uses: actions/checkout@v5.0.0
+      - name: Checkout the code
+        uses: actions/checkout@v4
 
-    -  name: Install Nodejs and npm
-       uses: actions/setup-node@v3.9.1
-       with:
-         node-version: 22
+      - name: Install Node.js and Newman
+        run: |
+          npm install -g newman newman-reporter-htmlextra
 
-    -  name: Install Newman and Html-Extra
-       run: |
-            npm install -g newman
-            npm install -g newman-reporter-htmlextra
-
-    -  name: Run the Postman Collection with newman
-       run: |
-            newman run 'Inwarranty-flow Collection With CSV File.postman_collection.json' \
+      - name: Run Postman Collection (one run, trimmed report)
+        run: |
+          newman run 'Inwarranty-flow Collection With CSV File.postman_collection.json' \
             -e QA.postman_environment.json \
             -d testdata.csv \
             -r cli,htmlextra \
@@ -38,18 +31,17 @@ jobs:
             --reporter-htmlextra-omitHeaders \
             --reporter-htmlextra-disableRequestBody \
             --reporter-htmlextra-disableResponseBody
-            
 
-    -  name: NewMan Report
-       if: always()
-       uses: actions/upload-artifact@v4.6.2
-       with:
-         name: Newman Report
-         path: newman/*.html
+      - name: Upload Full Newman Report as Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Newman Full Report
+          path: newman/report.html
 
-    -  name: creating Github page branch
-       if: always()
-       uses: peaceiris/actions-gh-pages@v4.0.0
-       with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
-         publish_dir: newman/
+      - name: Deploy Report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./newman
