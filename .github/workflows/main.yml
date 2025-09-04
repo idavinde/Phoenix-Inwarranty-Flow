@@ -19,18 +19,15 @@ jobs:
 
       - name: Install Node.js and Newman
         run: |
-          npm install -g newman newman-reporter-htmlextra
+          npm install -g newman newman-reporter-html
 
-      - name: Run Postman Collection (one run, trimmed report)
+      - name: Run Postman Collection
         run: |
           newman run 'Inwarranty-flow Collection With CSV File.postman_collection.json' \
             -e QA.postman_environment.json \
             -d testdata.csv \
             -r cli,htmlextra \
-            --reporter-htmlextra-export newman/report.html \
-            --reporter-htmlextra-omitHeaders \
-            --reporter-htmlextra-disableRequestBody \
-            --reporter-htmlextra-disableResponseBody
+            --reporter-htmlextra-export newman/report.html
 
       - name: Upload Full Newman Report as Artifact
         if: always()
@@ -44,4 +41,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./newman
+          publish_dir: newman/
